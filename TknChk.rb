@@ -23,8 +23,9 @@ x = 0
 while x <= final_matrix.length() - 1
     if final_matrix[x].uniq.size <= 1
         found_token += final_matrix[x][0]
+        puts "\nCommon char found ==> #{final_matrix[x][0]}\nCurrent Discoved Token: #{found_token}\n"
     end
     x+=1
 end
 
-puts found_token
+puts "\n\nFinal Token: #{found_token}"
