@@ -1,31 +1,39 @@
-tokens = File.open(ARGV[0])
-token_arr = tokens.readlines.map(&:chomp)
-char_matrix = Array.new
-final_matrix = Array.new
-found_token = ""
+file = File.open(ARGV[0])
+file_contents = file.readlines.map(&:chomp)
 
-
-token_arr.each {|token|
-    char_matrix.append(token.chars)
-}
-
-i = 0
-while i <= char_matrix[0].length() - 1
-    temp_arr = Array.new
-    for token in char_matrix
-        temp_arr.append(token[i])
-    end
-    final_matrix.append(temp_arr)
-    i+=1
+def create_char_matrix (arr)
+    char_matrix = Array.new
+    arr.each {|item|
+        char_matrix.append(item.chars)
+    }
+    return char_matrix
 end
 
-x = 0
-while x <= final_matrix.length() - 1
-    if final_matrix[x].uniq.size <= 1
-        found_token += final_matrix[x][0]
-        puts "\nCommon char found ==> #{final_matrix[x][0]}\nCurrent Discoved Token: #{found_token}\n"
+def vertical_array(arr)
+    out_arr = Array.new
+    i = 0
+    while i <= arr[0].length() - 1
+        temp_arr = Array.new
+        for items in arr
+            temp_arr.append(items[i])
+        end
+        out_arr.append(temp_arr)
+        i+=1
     end
-    x+=1
+    return out_arr
 end
 
-puts "\n\nFinal Token: #{found_token}"
+def find_common_at_index(arr)
+    found = ""
+    x = 0
+    while x <= arr.length() - 1
+        if arr[x].uniq.size <= 1
+            found += arr[x][0]
+            puts "\nCommon char found ==> #{arr[x][0]}\nCurrent Discoved Duplicates: #{found}\n"
+        end
+        x+=1
+    end
+    return found
+end
+
+puts "\nFinal duplicates are: #{find_common_at_index(vertical_array(create_char_matrix(file_contents)))}"
